@@ -1,0 +1,18 @@
+@import "~materialize-css/sass/materialize.scss";
+
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+
+.banner {
+    max-height: 34rem;
+    width: auto;
+}
+
+img.club {
+    max-height: 240px;
+    width: auto;
+}

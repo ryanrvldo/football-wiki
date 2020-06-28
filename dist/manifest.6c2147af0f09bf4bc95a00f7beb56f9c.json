@@ -1,0 +1,53 @@
+{
+  "icons": [
+    {
+      "src": "icon_512x512.bd9d3d342f17c8bffefc6188fd08b229.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_384x384.f99f16035651ea574223997b1deca8c0.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_192x192.ae033257bd980969efb90c269a536775.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_152x152.370272edf500ec1754206edca694b977.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_144x144.c11c116836a594b4be4254ac05485fa4.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_128x128.8855aece638c7401cd33bc20402291d8.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_96x96.a4fdce2b619b504cfb8fc12881e16675.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_72x72.ebccf40b33aaa89f725f49c648ba39f4.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }
+  ],
+  "name": "WikiFootball",
+  "short_name": "WikiFootball",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "All about footbal",
+  "theme_color": "#0288d1",
+  "gcm_sender_id": "233511798113",
+  "background_color": "#FFFFFF"
+}
