@@ -1,40 +1,41 @@
-import DataSource from "../data/data-source.js"
+import DataSource from '../data/data-source.js';
+import PNFIcon from '../../assets/img/undraw_page_not_found.svg';
 
-document.addEventListener("DOMContentLoaded", () => {
-    const optionTeams = document.querySelector("select");
-    const appBar = document.querySelector("app-bar");
+document.addEventListener('DOMContentLoaded', () => {
+  const optionTeams = document.querySelector('select');
+  const appBar = document.querySelector('app-bar');
 
-    DataSource.getCompetitions()
-        .then(competitions => {
-            competitions.forEach(competition => {
-                const optionElement = document.createElement("option")
-                optionElement.value = competition.code;
-                optionElement.innerHTML = competition.name;
+  DataSource.getCompetitions()
+    .then(competitions => {
+      competitions.forEach(competition => {
+        const optionElement = document.createElement('option');
+        optionElement.value = competition.code;
+        optionElement.innerHTML = competition.name;
 
-                optionTeams.appendChild(optionElement);
-            });
-            M.FormSelect.init(optionTeams);
-            appBar.togglePreloader();
-        })
-        .catch(msg => {
-            console.log(msg);
-        });
-
-    document.getElementById("standings-select").addEventListener("change", (event) => {
-        appBar.togglePreloader();
-        DataSource.getCompetitionStandings(event.target.value)
-            .then(response => {
-                renderTable(response.standings[0].table);
-                appBar.togglePreloader();
-            })
-            .catch(msg => {
-                console.log(msg);
-            });
+        optionTeams.appendChild(optionElement);
+      });
+      M.FormSelect.init(optionTeams);
+      appBar.togglePreloader();
+    })
+    .catch(msg => {
+      console.log(msg);
     });
 
-    function renderTable(standings) {
-        const tableElement = document.getElementById("standings-table");
-        tableElement.innerHTML = /* html */ `
+  document.getElementById('standings-select').addEventListener('change', event => {
+    appBar.togglePreloader();
+    DataSource.getCompetitionStandings(event.target.value)
+      .then(response => {
+        renderTable(response.standings[0].table);
+        appBar.togglePreloader();
+      })
+      .catch(msg => {
+        console.log(msg);
+      });
+  });
+
+  function renderTable(standings) {
+    const tableElement = document.getElementById('standings-table');
+    tableElement.innerHTML = /* html */ `
             <thead>
                 <tr>
                     <th>Position</th>
@@ -51,13 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
             </thead>
             <tbody></tbody>
         `;
-        standings.forEach(club => {
-            tableElement.querySelector("tbody").innerHTML += /* html */ `
+    standings.forEach(club => {
+      tableElement.querySelector('tbody').innerHTML += /* html */ `
                 <tr class="hoverable">
                     <td>${club.position}</td>
                     <td>
                         <div class="valign-wrapper">
-                            <img style="width: 30px; height:30px;" src="${club.team.crestUrl}" onerror="this.onerror=null;this.src='./src/assets/img/undraw_page_not_found.svg';" alt="">
+                            <img style="width: 30px; height:30px;" src="${club.team.crestUrl}" onerror="this.onerror=null;this.src='${PNFIcon}';" alt="">
                             <a href="./team.html?id=${club.team.id}">${club.team.name}</a>
                         </div>
                     </td>
@@ -70,8 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <td>${club.goalDifference}</td>
                     <td>${club.points}</td>
                 </tr>
-            `
-
-        });
-    }
+            `;
+    });
+  }
 });

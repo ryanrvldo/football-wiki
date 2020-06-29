@@ -1,143 +1,114 @@
 const base_url = 'https://api.football-data.org/v2/';
 const api_token = '26d1d3867a464ed7ab5ac2c695c8d979';
 const options = {
-    headers: {
-        'X-Auth-Token': api_token,
-    },
+  headers: {
+    'X-Auth-Token': api_token,
+  },
 };
 
 function getStatus(response) {
-    if (response.status === 200) {
-        return Promise.resolve(response);
-    } else {
-        showError(response.status);
-        return Promise.reject(new Error(response.statusText));
-    }
+  if (response.status === 200) {
+    return Promise.resolve(response);
+  } else {
+    showError(response.status);
+    return Promise.reject(new Error(response.statusText));
+  }
 }
 
 function toJson(response) {
-    return response.json();
+  return response.json();
 }
 
 function showError(error) {
-    console.log('Error: ' + error);
+  console.log('Error: ' + error);
+  return Promise.reject(error);
 }
 
 class DataSource {
-    static getCompetitions() {
-        if ('caches' in window) {
-            caches
-                .match(`${base_url}competitions?plan=TIER_ONE`)
-                .then(getStatus)
-                .then(toJson)
-                .then(response => {
-                    if (response.competitions) {
-                        return Promise.resolve(response.competitions);
-                    } else {
-                        return Promise.reject('getCompetitions:  failed response.');
-                    }
-                })
-                .catch(showError);
-        }
+  static fetchCompetitions() {
+    return fetch(`${base_url}competitions?plan=TIER_ONE`, options).then(getStatus).then(toJson);
+  }
 
-        return fetch(`${base_url}competitions?plan=TIER_ONE`, options)
-            .then(getStatus)
-            .then(toJson)
-            .then(response => {
-                if (response.competitions) {
-                    return Promise.resolve(response.competitions);
-                } else {
-                    return Promise.reject('getCompetitions:  failed response.');
-                }
-            })
-            .catch(showError);
+  static getCompetitions() {
+    if ('caches' in window) {
+      return caches
+        .match(`${base_url}competitions?plan=TIER_ONE`)
+        .then(response => {
+          if (response) return response.json();
+          return this.fetchCompetitions();
+        })
+        .then(data => {
+          return Promise.resolve(data.competitions);
+        })
+        .catch(showError);
+    } else {
+      return this.fetchCompetitions();
     }
+  }
 
-    static getCompetitionTeams(code) {
-        if ('caches' in window) {
-            caches
-                .match(`${base_url}competitions/${code}/teams`)
-                .then(getStatus)
-                .then(toJson)
-                .then(response => {
-                    if (response.teams) {
-                        return Promise.resolve(response.teams);
-                    } else {
-                        return Promise.reject('getCompetitionTeams: failed response.');
-                    }
-                })
-                .catch(showError);
-        }
+  static fetchTeams(code) {
+    return fetch(`${base_url}competitions/${code}/teams`, options).then(getStatus).then(toJson);
+  }
 
-        return fetch(`${base_url}competitions/${code}/teams`, options)
-            .then(getStatus)
-            .then(toJson)
-            .then(response => {
-                if (response.teams) {
-                    return Promise.resolve(response.teams);
-                } else {
-                    return Promise.reject('getCompetitionTeams: failed response.');
-                }
-            })
-            .catch(showError);
+  static getCompetitionTeams(code) {
+    if ('caches' in window) {
+      return caches
+        .match(`${base_url}competitions/${code}/teams`)
+        .then(response => {
+          if (response) return response.json();
+          return this.fetchTeams(code);
+        })
+        .then(data => {
+          return Promise.resolve(data.teams);
+        })
+        .catch(showError);
+    } else {
+      return this.fetchTeams(code);
     }
+  }
 
-    static getCompetitionStandings(code) {
-        if ('caches' in window) {
-            caches
-                .match(`${base_url}competitions/${code}/standings?standingType=TOTAL`)
-                .then(getStatus)
-                .then(toJson)
-                .then(response => {
-                    if (response) {
-                        return Promise.resolve(response);
-                    } else {
-                        return Promise.reject('getCompetitionStandings: failed response.');
-                    }
-                })
-                .catch(showError);
-        }
+  static fetchStandings(code) {
+    return fetch(`${base_url}competitions/${code}/standings?standingType=TOTAL`, options)
+      .then(getStatus)
+      .then(toJson);
+  }
 
-        return fetch(`${base_url}competitions/${code}/standings?standingType=TOTAL`, options)
-            .then(getStatus)
-            .then(toJson)
-            .then(response => {
-                if (response) {
-                    return Promise.resolve(response);
-                } else {
-                    return Promise.reject('getCompetitionStandings: failed response.');
-                }
-            })
-            .catch(showError);
+  static getCompetitionStandings(code) {
+    if ('caches' in window) {
+      return caches
+        .match(`${base_url}competitions/${code}/standings?standingType=TOTAL`)
+        .then(response => {
+          if (response) return response.json();
+          return this.fetchStandings(code);
+        })
+        .then(data => {
+          return Promise.resolve(data);
+        })
+        .catch(showError);
+    } else {
+      return this.fetchStandings(code);
     }
+  }
 
-    static getTeamDetail(id) {
-        if ('caches' in window) {
-            caches
-                .match(`${base_url}teams/${id}`)
-                .then(getStatus)
-                .then(toJson)
-                .then(response => {
-                    if (response) {
-                        return Promise.resolve(response);
-                    } else {
-                        return Promise.reject('getTeamDetail: failed response.');
-                    }
-                })
-                .catch(showError);
-        }
+  static fetchTeamDetail(id) {
+    return fetch(`${base_url}teams/${id}`, options).then(getStatus).then(toJson);
+  }
 
-        return fetch(`${base_url}teams/${id}`, options)
-            .then(getStatus)
-            .then(toJson)
-            .then(response => {
-                if (response) {
-                    return Promise.resolve(response);
-                } else {
-                    return Promise.reject('getTeamDetail: failed response.');
-                }
-            })
-            .catch(showError);
+  static getTeamDetail(id) {
+    if ('caches' in window) {
+      return caches
+        .match(`${base_url}teams/${id}`)
+        .then(response => {
+          if (response) return response.json();
+          return this.fetchTeamDetail(id);
+        })
+        .then(data => {
+          return Promise.resolve(data);
+        })
+        .catch(showError);
+    } else {
+      return this.fetchTeamDetail(id);
     }
+  }
 }
 export default DataSource;

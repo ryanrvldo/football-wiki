@@ -1,18 +1,33 @@
-@import "~materialize-css/sass/materialize.scss";
-
-$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
-
-@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-free/scss/solid.scss";
-@import "~@fortawesome/fontawesome-free/scss/brands.scss";
-@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import '~materialize-css/sass/materialize.scss';
 
 .banner {
-    max-height: 34rem;
-    width: auto;
+  max-height: 34rem;
+  width: auto;
 }
 
 img.club {
-    max-height: 240px;
-    width: auto;
+  max-height: 240px;
+  width: auto;
+}
+
+.sidenav .icon {
+  display: inline-block;
+  max-width: 40px;
+  height: auto;
+  margin: 0.45em !important;
+  filter: invert(36%) sepia(76%) saturate(3623%) hue-rotate(180deg) brightness(96%) contrast(98%);
+}
+
+a.sidenav-trigger > img {
+  width: 2rem;
+  margin-top: 0.8em;
+  filter: invert(100%) sepia(77%) saturate(0%) hue-rotate(105deg) brightness(113%) contrast(100%);
+  max-width: 100%;
+}
+
+img.icon {
+  max-height: 32px;
+  width: auto;
+  margin-top: 0.8rem;
+  filter: invert(100%) sepia(77%) saturate(0%) hue-rotate(105deg) brightness(113%) contrast(100%);
 }
