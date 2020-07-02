@@ -7,6 +7,7 @@ import TrophyIcon from './assets/icon/trophy.svg';
 import FutbolIcon from './assets/icon/futbol.svg';
 import ChartLineIcon from './assets/icon/chart-line.svg';
 import GratipayIcon from './assets/icon/gratipay.svg';
+import './assets/icon/apple-touch-icon-192x192.png';
 
 const menu = [
   {

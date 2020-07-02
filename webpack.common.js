@@ -16,7 +16,7 @@ module.exports = {
         use: ['html-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif)$/,
+        test: /\.(jpe?g|gif)$/,
         use: [
           {
             loader: 'file-loader',
@@ -28,12 +28,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.(svg|ico)$/,
+        test: /\.(png|svg|ico)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
-              name: `[name].[contentHash].[ext]`,
+              name: `[name].[ext]`,
               outputPath: 'assets/icon/',
             },
           },

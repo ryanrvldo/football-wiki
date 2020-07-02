@@ -1,19 +1,25 @@
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    runtime.register();
+    registerSW();
+    requestPermission();
+
+    const parallax = document.querySelectorAll('.parallax');
+    M.Parallax.init(parallax);
+    document.querySelector('app-bar').togglePreloader();
   });
-  requestPermission();
 } else {
   console.log('ServiceWorker is not supported in this browser.');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const parallax = document.querySelectorAll('.parallax');
-  M.Parallax.init(parallax);
-  document.querySelector('app-bar').togglePreloader();
-});
+async function registerSW() {
+  try {
+    const registration = await navigator.serviceWorker.register('/sw.js');
+    console.log('SW registered: ', registration);
+  } catch (registrationError) {
+    console.log('SW registration failed: ', registrationError);
+  } finally {
+  }
+}
 
 function requestPermission() {
   if ('Notification' in window) {
@@ -27,7 +33,7 @@ function requestPermission() {
       }
 
       if ('PushManager' in window) {
-        runtime.register().then(registration => {
+        navigator.serviceWorker.getRegistration().then(registration => {
           registration.pushManager
             .subscribe({
               userVisibleOnly: true,

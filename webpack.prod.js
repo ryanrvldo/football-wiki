@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = merge(common, {
@@ -79,9 +79,6 @@ module.exports = merge(common, {
       filename: 'favorite-teams.html',
       chunks: ['vendor', 'app', 'favoriteTeams'],
     }),
-    new ServiceWorkerWebpackPlugin({
-      entry: './src/sw.js',
-    }),
     new WebpackPwaManifest({
       name: 'WikiFootball',
       short_name: 'WikiFootball',
@@ -95,6 +92,10 @@ module.exports = merge(common, {
           sizes: [72, 96, 128, 144, 152, 192, 384, 512],
         },
       ],
+    }),
+    new WorkboxPlugin.InjectManifest({
+      swSrc: './src/sw.js',
+      include: [new RegExp(/\.(?:html|css|svg|jpg|png|js|json)$/)],
     }),
   ],
 });
