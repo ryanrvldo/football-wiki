@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             ${menu.map(item => menuItem(item)).join('')}
         `;
-  });
 
   const navItem = document.querySelectorAll('ul.topnav li, ul.sidenav li');
   navItem.forEach(item => {
